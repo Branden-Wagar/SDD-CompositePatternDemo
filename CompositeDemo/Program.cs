@@ -11,20 +11,48 @@ namespace CompositeDemo
             Train PassengerCar = new PassengerCar();
             Train Kaboose = new Kaboose();
 
-            PassengerCar.Add(Kaboose);
-            EngineCar.Add(PassengerCar);
-            EngineCar.Whistle();
 
-            Console.WriteLine("\n\n");
-
-            EngineCar = new EngineCar();
             EngineCar.Add(PassengerCar);
             EngineCar.Add(Kaboose);
             EngineCar.Whistle();
+            /* RESULTS:
+             * CHOO CHOO 
+             * ALL ABOARD!
+             * Chugga Chugga!
+            */
+
             Console.WriteLine("\n");
             EngineCar.Add(new PassengerCar());
             EngineCar.Add(new PassengerCar());
             EngineCar.EmergencyBrake();
+            /* RESULTS:
+             * Apply E-Brake!
+             * Apply E-Brake!
+             * Apply E-Brake!
+             * Apply E-Brake!
+             * Apply E-Brake!
+            */
+
+            Console.WriteLine("\n\n");
+            EngineCar = new EngineCar();
+
+            PassengerCar.Add(Kaboose);
+            EngineCar.Add(PassengerCar);
+            EngineCar.Whistle();
+            /* RESULTS:
+             * CHOO CHOO
+             * ALL ABOARD!
+             * 
+             * Note that the Kaboose does not 'Chugga Chugga!'
+             * because it was added to a leaf node, which did not throw an exception
+            */
+
+            Kaboose.Add(PassengerCar);
+            /* RESULTS:
+             * Exception is thrown from Kaboose, it is a leaf node
+             * 
+            */
+
         }
     }
 
