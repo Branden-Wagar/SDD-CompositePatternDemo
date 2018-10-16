@@ -29,23 +29,32 @@ namespace CompositeDemo
     }
 
 
-
+    /// <summary>
+    /// Component Interface for our Train
+    /// </summary>
     public interface Train {
         void Whistle();
         bool Forward();
         void EmergencyBrake();
         void Brakes();
-        void Add(Train t);
-        void Remove(Train t);
+        void Add(Train t); // can handle all objects 
+        void Remove(Train t); // which implement this interface
         Train GetChild(int i);
     }
 
-
+    /// <summary>
+    /// Composite class which implements our Train interface
+    /// </summary>
     public class EngineCar : Train{
-        private List<Train> _children;
+        
+        private List<Train> _children; // holds all children of this Composite
+
+
         public EngineCar(){
             _children = new List<Train>();
         }
+
+
         public void Whistle(){
             Console.WriteLine("CHOO CHOO");
             foreach (var c in _children){
@@ -71,6 +80,12 @@ namespace CompositeDemo
             Console.WriteLine("Applying Brakes...");
         }
 
+        /// <summary>
+        /// Our add/remove/get functions all handle any object
+        /// that implements Train
+        /// </summary>
+        /// <returns>The add.</returns>
+        /// <param name="t">T.</param>
         public void Add(Train t){
             _children.Add(t);
         }
@@ -84,12 +99,12 @@ namespace CompositeDemo
         }
     }
 
+    /// <summary>
+    /// This is a leaf node of our Component Structure
+    /// Returns null/ just returns on child operations
+    /// </summary>
     public class PassengerCar : Train
     {
-        public void Add(Train t)
-        {
-            return;
-        }
 
         public void Brakes()
         {
@@ -106,14 +121,19 @@ namespace CompositeDemo
             return false;
         }
 
+        public void Add(Train t)
+        {
+            return; // we can't add children to a leaf
+        }
+
         public Train GetChild(int i)
         {
-            return null;
+            return null; // leaves have no children so we can return null
         }
 
         public void Remove(Train t)
         {
-            return;
+            return; // nor remove what we don't have
         }
 
         public void Whistle()
@@ -122,6 +142,10 @@ namespace CompositeDemo
         }
     }
 
+    /// <summary>
+    /// This is another leaf of our Component Structure
+    /// Throws exceptions on child operations
+    /// </summary>
     public class Kaboose : Train
     {
         public void Add(Train t)
